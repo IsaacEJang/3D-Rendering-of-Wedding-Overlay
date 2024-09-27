@@ -400,6 +400,7 @@ void SceneManager::PrepareScene()
  ***********************************************************/
 void SceneManager::RenderScene()
 {
+
 	RenderTable();
 	RenderCologneBottle();
 }
@@ -424,7 +425,7 @@ void SceneManager::RenderTable()
 	/*** and drawing all the basic 3D shapes.						***/
 	/******************************************************************/
 	// set the XYZ scale for the mesh
-	scaleXYZ = glm::vec3(20.0f, 1.0f, 10.0f);
+	scaleXYZ = glm::vec3(30.0f, 1.0f, 30.0f);
 
 	// set the XYZ rotation for the mesh
 	XrotationDegrees = 0.0f;
@@ -458,6 +459,7 @@ void SceneManager::RenderTable()
  ***********************************************************/
 void SceneManager::RenderCologneBottle()
 {
+
 	// Declare the variables for the transformations
 	glm::vec3 scaleXYZ;
 	float XrotationDegrees = 0.0f;
@@ -467,11 +469,12 @@ void SceneManager::RenderCologneBottle()
 
 #pragma region CologneBody
 	// --- Blue Box for the Cologne Body ---
-	scaleXYZ = glm::vec3(3.5f, 5.0f, 1.5f);  
-	XrotationDegrees = 0.0f;
+	//scaleXYZ = glm::vec3(3.5f, 1.5f, 5.0f);
+	scaleXYZ = glm::vec3(3.5f, 5.0f, 1.5f);
+	XrotationDegrees = 90.0f;  // Rotate the body 90 degrees around the X-axis
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 0.0f;
-	positionXYZ = glm::vec3(0.0f, 2.5f, 0.0f);  
+	positionXYZ = glm::vec3(-15.0f, .75f, -15.0f);  // Adjusted position for laying down
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderColor(0.0f, 0.0f, 0.6f, .85f);  // Dark blue for the cologne bottle
 	m_basicMeshes->DrawBoxMesh();
@@ -483,14 +486,12 @@ void SceneManager::RenderCologneBottle()
 	//m_basicMeshes->DrawBoxMesh();
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-
-
 	// --- Gold Half-Sphere (Center of the Blue Box) ---
-	scaleXYZ = glm::vec3(0.5f, 0.2f, 0.5f);  
-	XrotationDegrees = 90.0f;
+	scaleXYZ = glm::vec3(0.5f, 0.2f, 0.5f);
+	XrotationDegrees = 90.0f;  // Rotate the half-sphere along with the body
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 0.0f;
-	positionXYZ = glm::vec3(0.0f, 2.5f, 0.75f);  // Position at the center of the front face of the blue box
+	positionXYZ = glm::vec3(-15.0f, 1.5f, -12.75f);  // Adjusted position to match the rotated body
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderColor(1.0f, 0.88f, 0.25f, 1.0f);  // gold color
 	m_basicMeshes->DrawHalfSphereMesh();
@@ -506,14 +507,14 @@ void SceneManager::RenderCologneBottle()
 
 #pragma region CologneCap
 	// --- Smaller Cylinder (Base of the Cap) ---
-	scaleXYZ = glm::vec3(0.7f, 1.0f, 0.7f);  // Smaller radius and height
-	XrotationDegrees = 0.0f;
-	YrotationDegrees = 0.0f;
-	ZrotationDegrees = 0.0f;
-	positionXYZ = glm::vec3(0.0f, 5.0f, 0.0f);  // Positioned on top of the box (y = height of box)
-	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
-	SetShaderColor(1.0f, 0.88f, 0.25f, 1.0f);  // gold color
-	m_basicMeshes->DrawCylinderMesh();
+	//scaleXYZ = glm::vec3(0.7f, 1.0f, 0.7f);  // Smaller radius and height
+	//XrotationDegrees = 90.0f;  // Rotate the cylinder to match the body's orientation
+	//YrotationDegrees = 0.0f;
+	//ZrotationDegrees = 0.0f;
+	//positionXYZ = glm::vec3(-15.0f, 1.5f, -17.0f);  // Adjusted position to match the rotated body
+	//SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	//SetShaderColor(1.0f, 0.88f, 0.25f, 1.0f);  // gold color
+	//m_basicMeshes->DrawCylinderMesh();
 
 	//// Wireframe for edges
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -522,17 +523,15 @@ void SceneManager::RenderCologneBottle()
 	//m_basicMeshes->DrawCylinderMesh();
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-
-
 	// --- Larger Cylinder (Top of the Cap) ---
-	scaleXYZ = glm::vec3(1.0f, 1.0f, 1.0f);  
-	XrotationDegrees = 0.0f;
-	YrotationDegrees = 0.0f;
-	ZrotationDegrees = 0.0f;
-	positionXYZ = glm::vec3(0.0f, 6.0f, 0.0f);  // Positioned on top of the smaller cylinder (y = height of box + height of small cylinder)
-	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
-	SetShaderColor(1.0f, 0.88f, 0.25f, 1.0f);  // gold color
-	m_basicMeshes->DrawCylinderMesh();
+	//scaleXYZ = glm::vec3(1.0f, 1.0f, 1.0f);
+	//XrotationDegrees = 90.0f;  // Rotate the larger cylinder to match the orientation
+	//YrotationDegrees = 0.0f;
+	//ZrotationDegrees = 0.0f;
+	//positionXYZ = glm::vec3(-15.0f, 1.5f, -18.0f);  // Adjusted position to align with the smaller cylinder
+	//SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	//SetShaderColor(1.0f, 0.88f, 0.25f, 1.0f);  // gold color
+	//m_basicMeshes->DrawCylinderMesh();
 
 	//// Wireframe for edges
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

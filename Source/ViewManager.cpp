@@ -239,8 +239,8 @@ void ViewManager::ProcessKeyboardEvents()
 		bOrthographicProjection = true;
 
 		// change the camera settings to show a top orthographic view
-		g_pCamera->Position = glm::vec3(0.0f, 7.0f, 0.0f);
-		g_pCamera->Up = glm::vec3(-1.0f, 0.0f, 0.0f);
+		g_pCamera->Position = glm::vec3(0.0f, 30.0f, 0.0f);
+		g_pCamera->Up = glm::vec3(0.0f, 0.0f, -1.0f);
 		g_pCamera->Front = glm::vec3(0.0f, -1.0f, 0.0f);
 	}
 	if (glfwGetKey(m_pWindow, GLFW_KEY_P) == GLFW_PRESS)
