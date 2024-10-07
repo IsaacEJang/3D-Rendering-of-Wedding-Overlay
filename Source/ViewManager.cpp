@@ -243,16 +243,14 @@ void ViewManager::ProcessKeyboardEvents()
 		g_pCamera->Up = glm::vec3(0.0f, 0.0f, -1.0f);
 		g_pCamera->Front = glm::vec3(0.0f, -1.0f, 0.0f);
 	}
-	if (glfwGetKey(m_pWindow, GLFW_KEY_P) == GLFW_PRESS)
-	{
-		// change to perspective projection
-		bOrthographicProjection = false;
 
-		// change the camera settings to show a perspective view
+	if (glfwGetKey(m_pWindow, GLFW_KEY_P) == GLFW_PRESS && bOrthographicProjection)
+	{
+		// Only change to perspective projection if currently in orthographic mode
+		bOrthographicProjection = false;
 		g_pCamera->Position = glm::vec3(0.0f, 5.5f, 8.0f);
 		g_pCamera->Front = glm::vec3(0.0f, -0.5f, -2.0f);
 		g_pCamera->Up = glm::vec3(0.0f, 1.0f, 0.0f);
-		g_pCamera->Zoom = 80;
 	}
 }
 

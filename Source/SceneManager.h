@@ -111,7 +111,13 @@ public:
 	// add and define the light sources before rendering
 	void SetupSceneLights();
 
-	void RenderCologneBottle();
 	void RenderTable();
+	void RenderCologneBottle();
+	void RenderPerfumeBottle();
+	void RenderItinerary();
+	void RenderNecklaceBox();
+	void RenderRingBox();
+	void RenderWhiteVowBook();
+	void RenderBrownVowBook();
 
 };
