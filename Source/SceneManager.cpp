@@ -31,7 +31,7 @@ namespace
  *
  *  The constructor for the class
  ***********************************************************/
-SceneManager::SceneManager(ShaderManager *pShaderManager)
+SceneManager::SceneManager(ShaderManager* pShaderManager)
 {
 	m_pShaderManager = pShaderManager;
 	m_basicMeshes = new ShapeMeshes();
@@ -351,7 +351,6 @@ void SceneManager::LoadSceneTextures()
 		"textures/marble.jpg",
 		"marble");
 
-
 	bReturn = CreateGLTexture(
 		"textures/gold.jpg",
 		"gold");
@@ -367,6 +366,14 @@ void SceneManager::LoadSceneTextures()
 	bReturn = CreateGLTexture(
 		"textures/perfume.jpg",
 		"perfume");
+
+	bReturn = CreateGLTexture(
+		"textures/gray_felt.jpg",
+		"gray_felt");
+
+	bReturn = CreateGLTexture(
+		"textures/white_leather.jpg",
+		"white_leather");
 
 
 	// after the texture image data is loaded into memory, the 
@@ -410,7 +417,7 @@ void SceneManager::SetShaderMaterial(
  *  PrepareScene()
  *
  *  This method is used for preparing the 3D scene by loading
- *  the shapes, textures in memory to support the 3D scene 
+ *  the shapes, textures in memory to support the 3D scene
  *  rendering
  ***********************************************************/
 void SceneManager::PrepareScene()
@@ -437,7 +444,7 @@ void SceneManager::PrepareScene()
 /***********************************************************
  *  RenderScene()
  *
- *  This method is used for rendering the 3D scene by 
+ *  This method is used for rendering the 3D scene by
  *  transforming and drawing the basic 3D shapes
  ***********************************************************/
 void SceneManager::RenderScene()
@@ -474,7 +481,7 @@ void SceneManager::RenderTable()
 	/*** and drawing all the basic 3D shapes.						***/
 	/******************************************************************/
 	// set the XYZ scale for the mesh
-	scaleXYZ = glm::vec3(30.0f, 1.0f, 30.0f);
+	scaleXYZ = glm::vec3(35.0f, 1.0f, 35.0f);
 
 	// set the XYZ rotation for the mesh
 	XrotationDegrees = 0.0f;
@@ -518,84 +525,50 @@ void SceneManager::RenderCologneBottle()
 
 #pragma region CologneBody
 	// --- Blue Box for the Cologne Body ---
-	//scaleXYZ = glm::vec3(3.5f, 1.5f, 5.0f);
-	scaleXYZ = glm::vec3(3.5f, 5.0f, 1.5f);
-	XrotationDegrees = 0.0f;  // Rotate the body 90 degrees around the X-axis
+	scaleXYZ = glm::vec3(5.25f, 7.5f, 2.25f);  // Scaled up by 1.5
+	XrotationDegrees = 90.0f;
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 0.0f;
-	positionXYZ = glm::vec3(-15.0f, 2.5f, -15.0f);  // Adjusted position for laying down
+	positionXYZ = glm::vec3(-15.0f, 0.75f, -15.0f);  // Base position remains the same
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
-	//SetShaderColor(0.0f, 0.0f, 0.6f, .85f);  // Dark blue for the cologne bottle
 	SetShaderTexture("blue_glass");
 	m_basicMeshes->DrawBoxMesh();
 
-	//// Wireframe for edges
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	//glLineWidth(1.0f);
-	//SetShaderColor(1.0f, 1.0f, 1.0f, 1.0f); // White Wireframes
-	//m_basicMeshes->DrawBoxMesh();
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
 	// --- Gold Sphere (Center of the Blue Box) ---
-	scaleXYZ = glm::vec3(0.5f, 0.5f, 0.2f);
-	XrotationDegrees = 0.0f;  // Rotate the half-sphere along with the body
+	scaleXYZ = glm::vec3(0.75f, 0.75f, 0.3f);  // Scaled up by 1.5
+	XrotationDegrees = -90.0f;  // Rotate the half-sphere along with the body
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 0.0f;
-	positionXYZ = glm::vec3(-15.0f, 2.5f, -14.25f);  // Adjusted position to match the rotated body
+	positionXYZ = glm::vec3(-15.0f, 1.875f, -15.0f);  // Adjusted position (0.75 * 1.5 = 1.125; 0.75 + 1.125 = 1.875)
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
-	//SetShaderColor(1.0f, 0.88f, 0.25f, 1.0f);  // gold color
 	SetShaderTexture("versace");
 	m_basicMeshes->DrawSphereMesh();
-
-	//// Wireframe for edges
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	//glLineWidth(1.0f);
-	//SetShaderColor(1.0f, 1.0f, 1.0f, 1.0f); // White Wireframes
-	//m_basicMeshes->DrawHalfSphereMesh();
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 #pragma endregion
-
 
 #pragma region CologneCap
 	// --- Smaller Cylinder (Base of the Cap) ---
-	scaleXYZ = glm::vec3(0.7f, 0.8f, 0.7f);  // Smaller radius and height
-	XrotationDegrees = 0.0f;  // Rotate the cylinder to match the body's orientation
+	scaleXYZ = glm::vec3(1.05f, 1.2f, 1.05f);  // Scaled up by 1.5
+	XrotationDegrees = 90.0f;  // Rotate the cylinder to match the body's orientation
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 0.0f;
-	positionXYZ = glm::vec3(-15.0f, 5.0f, -15.0f);  // Adjusted position to match the rotated body
+	positionXYZ = glm::vec3(-15.0f, 0.75f, -19.95f);  // Adjusted position (-3.3 * 1.5 = -4.95; -15.0 + (-4.95) = -19.95)
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
-	//SetShaderColor(1.0f, 0.88f, 0.25f, 1.0f);  // gold color
 	SetShaderTexture("gold");
 	m_basicMeshes->DrawCylinderMesh();
 
-	//// Wireframe for edges
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	//glLineWidth(1.0f);
-	//SetShaderColor(1.0f, 1.0f, 1.0f, 1.0f);  // White Wireframes
-	//m_basicMeshes->DrawCylinderMesh();
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
 	// --- Larger Cylinder (Top of the Cap) ---
-	scaleXYZ = glm::vec3(1.0f, 1.0f, 1.0f);
-	XrotationDegrees = 0.0f;  // Rotate the larger cylinder to match the orientation
-	YrotationDegrees = 90.0f;
-	ZrotationDegrees = 0.0f;
-	positionXYZ = glm::vec3(-15.0f, 5.8f, -15.0f);  // Adjusted position to align with the smaller cylinder
+	scaleXYZ = glm::vec3(1.5f, 1.5f, 1.5f);  // Scaled up by 1.5
+	XrotationDegrees = -90.0f;  // Rotate the larger cylinder to match the orientation
+	YrotationDegrees = 0.0f;
+	ZrotationDegrees = 90.0f;
+	positionXYZ = glm::vec3(-15.0f, 0.75f, -19.95f);  // Same adjusted position as the smaller cylinder
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
-	//SetShaderColor(1.0f, 0.88f, 0.25f, 1.0f);  // gold color
 	SetShaderTexture("gold");
-	m_basicMeshes->DrawCylinderMesh(false,true,true);
+	m_basicMeshes->DrawCylinderMesh(false, true, true);
 	SetShaderTexture("versace");
-	m_basicMeshes->DrawCylinderMesh(true, false,false);//using different texture for top of cylinder
-
-	//// Wireframe for edges
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	//glLineWidth(1.0f);
-	//SetShaderColor(1.0f, 1.0f, 1.0f, 1.0f);  // White Wireframes
-	//m_basicMeshes->DrawCylinderMesh();
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	m_basicMeshes->DrawCylinderMesh(true, false, false);  // Using different texture for the top of the cylinder
 #pragma endregion
-		
+
 }
 
 
@@ -614,55 +587,65 @@ void SceneManager::RenderPerfumeBottle()
 	float ZrotationDegrees = 0.0f;
 	glm::vec3 positionXYZ;
 
+#pragma region PerfumeBody
 	// --- Gold Box for the Perfume Body ---
-	scaleXYZ = glm::vec3(1.75f, 3.5f, 1.75f);
-	XrotationDegrees = 0.0f;  // Rotate the body 90 degrees around the X-axis
+	scaleXYZ = glm::vec3(3.5f, 7.0f, 3.5f);  // Scaled up by 2
+	XrotationDegrees = 90.0f;  // Rotate the body 90 degrees around the X-axis
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 0.0f;
-	positionXYZ = glm::vec3(-19.0f, 1.75f, 5.0f);
+	positionXYZ = glm::vec3(-21.0f, 0.875f, 2.0f);  // Base position remains the same
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
-	//SetShaderColor(1.0f, 0.88f, 0.25f, 1.0f);  // gold color
 	SetShaderTexture("perfume");
 	m_basicMeshes->DrawBoxMesh();
+#pragma endregion
 
+#pragma region RedLabel
 	// --- Red Label ---
-	scaleXYZ = glm::vec3(.65f, 1.0f, 1.25f);
-	XrotationDegrees = 90.0f;
+	scaleXYZ = glm::vec3(1.3f, 2.0f, 2.5f);  // Scaled up by 2
+	XrotationDegrees = 0.0f;
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 0.0f;
-	positionXYZ = glm::vec3(-19.0f, 1.75f, 5.9f);  // Adjusted position to align with the smaller cylinder
+	// Calculate the new Y position to align with the scaled body
+	positionXYZ = glm::vec3(-21.0f, 2.725f, 2.0f);  // Adjusted Y position
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
-	SetShaderColor(1.0f, 0.0f, 0.0f, 1.0f);  // red color
+	SetShaderColor(1.0f, 0.0f, 0.0f, 1.0f);  // Red color
 	m_basicMeshes->DrawPlaneMesh();
+#pragma endregion
 
+#pragma region PerfumeCapBase
 	// --- Smaller Cylinder (Base of the Cap) ---
-	scaleXYZ = glm::vec3(0.65f, 0.5f, 0.65f);  // Smaller radius and height
-	XrotationDegrees = 0.0f;  // Rotate the cylinder to match the body's orientation
+	scaleXYZ = glm::vec3(1.3f, 1.5f, 1.3f);  // Scaled up by 2
+	XrotationDegrees = 90.0f;  // Rotate the cylinder to match the body's orientation
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 0.0f;
-	positionXYZ = glm::vec3(-19.0f, 3.5f, 5.0f);  // Adjusted position to match the rotated body
+	// Calculate the new Z position to align with the scaled body
+	positionXYZ = glm::vec3(-21.0f, 0.875f, -3.0f);  // Adjusted Z position
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
-	//SetShaderColor(1.0f, 0.88f, 0.25f, 1.0f);  // gold color
 	SetShaderTexture("gold");
 	m_basicMeshes->DrawCylinderMesh();
+#pragma endregion
 
+#pragma region PerfumeCap
 	// --- Perfume Cap ---
-	scaleXYZ = glm::vec3(1.5f, .75f, 1.5f);
-	XrotationDegrees = 0.0f;  // Rotate the larger cylinder to match the orientation
+	scaleXYZ = glm::vec3(3.0f, 1.5f, 3.0f);  // Scaled up by 2
+	XrotationDegrees = -90.0f;  // Rotate the cap to match the orientation
 	YrotationDegrees = 0.0f;
-	ZrotationDegrees = 0.0f;
-	positionXYZ = glm::vec3(-19.0f, 4.37f, 5.0f);  // Adjusted position to align with the smaller cylinder
+	ZrotationDegrees = 180.0f;
+	// Calculate the new Z position to align with the cap base
+	positionXYZ = glm::vec3(-21.0f, 0.875f, -3.5f);  // Adjusted Z position
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("gold");
+	// Draw the sides of the cap
 	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::bottom);
 	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::right);
 	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::left);
 	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::back);
 	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::front);
 
-
+	// Draw the top with a different texture
 	SetShaderTexture("versace");
-	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::top); //different textur for top of cap
+	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::top);  // Different texture for top of cap
+#pragma endregion
 
 
 }
@@ -687,7 +670,7 @@ void SceneManager::RenderItinerary()
 	XrotationDegrees = 0.0f;  // Rotate the body 90 degrees around the X-axis
 	YrotationDegrees = -60.0f;
 	ZrotationDegrees = 0.0f;
-	positionXYZ = glm::vec3(-18.0f, 0.1f, -5.0f);
+	positionXYZ = glm::vec3(-19.5f, 0.1f, -10.0f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderColor(1.0f, 1.0f, 1.0f, 1.0f);  // white color
 	//SetShaderTexture("");
@@ -695,10 +678,10 @@ void SceneManager::RenderItinerary()
 
 	// --- Green Torus ---
 	scaleXYZ = glm::vec3(1.5f, 1.5f, 0.75f);
-	XrotationDegrees = 90.0f;  
+	XrotationDegrees = 90.0f;
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 0.0f;
-	positionXYZ = glm::vec3(-22.25f, 0.3f, -12.75f);
+	positionXYZ = glm::vec3(-23.25f, 0.3f, -17.25f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderColor(0.12f, 0.21f, 0.18f, 1.0f);  // Dark green color
 	//SetShaderTexture("");
@@ -709,7 +692,7 @@ void SceneManager::RenderItinerary()
 	XrotationDegrees = 0.0f;  // Rotate the half-sphere along with the body
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 0.0f;
-	positionXYZ = glm::vec3(-22.25f, 0.0f, -12.75f);
+	positionXYZ = glm::vec3(-23.25f, 0.0f, -17.25f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderColor(0.12f, 0.21f, 0.18f, 1.0f);  // Dark green color
 	//SetShaderTexture("leaf");
@@ -725,7 +708,12 @@ void SceneManager::RenderItinerary()
  ***********************************************************/
 void SceneManager::RenderNecklaceBox()
 {
-
+	// Declare the variables for the transformations
+	glm::vec3 scaleXYZ;
+	float XrotationDegrees = 0.0f;
+	float YrotationDegrees = 0.0f;
+	float ZrotationDegrees = 0.0f;
+	glm::vec3 positionXYZ;
 }
 
 /***********************************************************
@@ -736,7 +724,12 @@ void SceneManager::RenderNecklaceBox()
  ***********************************************************/
 void SceneManager::RenderRingBox()
 {
-
+	// Declare the variables for the transformations
+	glm::vec3 scaleXYZ;
+	float XrotationDegrees = 0.0f;
+	float YrotationDegrees = 0.0f;
+	float ZrotationDegrees = 0.0f;
+	glm::vec3 positionXYZ;
 }
 
 
@@ -748,6 +741,83 @@ void SceneManager::RenderRingBox()
  ***********************************************************/
 void SceneManager::RenderWhiteVowBook()
 {
+	// Declare the variables for the transformations
+	glm::vec3 scaleXYZ;
+	float XrotationDegrees = 0.0f;
+	float YrotationDegrees = 0.0f;
+	float ZrotationDegrees = 0.0f;
+	glm::vec3 positionXYZ;
+
+	// --- Gray Felt Sleeve ---
+	scaleXYZ = glm::vec3(13.0f, 0.5f, 17.0f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 15.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(-3.0f, 0.25f, 1.0f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("gray_felt");
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Bottom Vow Cover ---
+	scaleXYZ = glm::vec3(10.0f, 0.2f, 14.0f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 15.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(-3.0f, .6f, 1.0f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("white_leather");
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Top Vow Cover ---
+	scaleXYZ = glm::vec3(10.0f, 0.2f, 14.0f);
+	XrotationDegrees = 2.0f;
+	YrotationDegrees = 15.0f;
+	ZrotationDegrees = 5.0f;
+	positionXYZ = glm::vec3(-3.0f, 1.0f, 1.0f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("white_leather");
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Paper Inside Vow ---
+	scaleXYZ = glm::vec3(8.0, 0.05f, 14.0f);
+	XrotationDegrees = 0.75f;
+	YrotationDegrees = 15.0f;
+	ZrotationDegrees = 3.5f;
+	positionXYZ = glm::vec3(-2.25f, .8f, .75f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderColor(1, 1, 1, 1);
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Paper Inside Vow ---
+	scaleXYZ = glm::vec3(8.0, 0.05f, 14.0f);
+	XrotationDegrees = 0.75f;
+	YrotationDegrees = 15.0f;
+	ZrotationDegrees = 2.5f;
+	positionXYZ = glm::vec3(-2.25f, .8f, .75f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderColor(1, 1, 1, 1);
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Paper Inside Vow ---
+	scaleXYZ = glm::vec3(8.0, 0.05f, 14.0f);
+	XrotationDegrees = 0.75f;
+	YrotationDegrees = 15.0f;
+	ZrotationDegrees = 1.5f;
+	positionXYZ = glm::vec3(-2.25f, .8f, .75f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderColor(1, 1, 1, 1);
+	m_basicMeshes->DrawBoxMesh();
+
+	
+	// --- Paper Inside Vow ---
+	scaleXYZ = glm::vec3(8.0, 0.05f, 14.0f);
+	XrotationDegrees = 0.75f;
+	YrotationDegrees = 15.0f;
+	ZrotationDegrees = 0.5f;
+	positionXYZ = glm::vec3(-2.25f, .8f, .75f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderColor(1, 1, 1, 1);  
+	m_basicMeshes->DrawBoxMesh();
 
 }
 
@@ -759,5 +829,23 @@ void SceneManager::RenderWhiteVowBook()
  ***********************************************************/
 void SceneManager::RenderBrownVowBook()
 {
+	// Declare the variables for the transformations
+	glm::vec3 scaleXYZ;
+	float XrotationDegrees = 0.0f;
+	float YrotationDegrees = 0.0f;
+	float ZrotationDegrees = 0.0f;
+	glm::vec3 positionXYZ;
+
+
+
+	// --- Gray Felt Sleeve ---
+	scaleXYZ = glm::vec3(13.0f, 0.5f, 17.0f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 0.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(15.0f, 0.25f, 1.0f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("gray_felt");
+	m_basicMeshes->DrawBoxMesh();
 
 }
