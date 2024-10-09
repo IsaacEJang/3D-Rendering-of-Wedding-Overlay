@@ -375,7 +375,17 @@ void SceneManager::LoadSceneTextures()
 		"textures/white_leather.jpg",
 		"white_leather");
 
+	bReturn = CreateGLTexture(
+		"textures/brown_leather.jpg",
+		"brown_leather");
 
+	bReturn = CreateGLTexture(
+		"textures/black_felt.jpg",
+		"black_felt");
+
+	bReturn = CreateGLTexture(
+		"textures/green_felt.jpg",
+		"green_felt");
 	// after the texture image data is loaded into memory, the 
 	// loaded textures need to be bound to texture slots - there
 	// are a total of 16 available slots for scene textures
@@ -481,7 +491,7 @@ void SceneManager::RenderTable()
 	/*** and drawing all the basic 3D shapes.						***/
 	/******************************************************************/
 	// set the XYZ scale for the mesh
-	scaleXYZ = glm::vec3(35.0f, 1.0f, 35.0f);
+	scaleXYZ = glm::vec3(35.0f, 1.0f, 30.0f);
 
 	// set the XYZ rotation for the mesh
 	XrotationDegrees = 0.0f;
@@ -714,6 +724,56 @@ void SceneManager::RenderNecklaceBox()
 	float YrotationDegrees = 0.0f;
 	float ZrotationDegrees = 0.0f;
 	glm::vec3 positionXYZ;
+
+	// --- Ring Box Bottom---
+	scaleXYZ = glm::vec3(6.0f, 2.0f, 6.0f);  
+	XrotationDegrees = 0.0f;  
+	YrotationDegrees = 15.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(-5.0f, 1.0f, -15.0f);  
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("green_felt");
+	// Draw the sides of the cap
+	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::bottom);
+	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::right);
+	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::left);
+	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::back);
+	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::front);
+
+	// Draw the top with a different texture
+	SetShaderTexture("black_felt");
+	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::top);
+
+	// --- Necklace Platform ---
+	scaleXYZ = glm::vec3(5.0f, 0.2f, 5.0f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 15.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(-5.0f, 2.1f, -15.0f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("black_felt");
+	m_basicMeshes->DrawBoxMesh();
+
+
+	// --- Ring Box Top ---
+	scaleXYZ = glm::vec3(6.0f, 2.0f, 6.0f);
+	XrotationDegrees = 70.0f;
+	YrotationDegrees = 15.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(-6.3f, 4.5f, -19.8f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("green_felt");
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Necklace Platform ---
+	scaleXYZ = glm::vec3(5.0f, 0.2f, 5.0f);
+	XrotationDegrees = 70.0f;
+	YrotationDegrees = 15.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(-6.0f, 4.75f, -18.75f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("black_felt");
+	m_basicMeshes->DrawBoxMesh();
 }
 
 /***********************************************************
@@ -808,7 +868,6 @@ void SceneManager::RenderWhiteVowBook()
 	SetShaderColor(1, 1, 1, 1);
 	m_basicMeshes->DrawBoxMesh();
 
-	
 	// --- Paper Inside Vow ---
 	scaleXYZ = glm::vec3(8.0, 0.05f, 14.0f);
 	XrotationDegrees = 0.75f;
@@ -836,8 +895,6 @@ void SceneManager::RenderBrownVowBook()
 	float ZrotationDegrees = 0.0f;
 	glm::vec3 positionXYZ;
 
-
-
 	// --- Gray Felt Sleeve ---
 	scaleXYZ = glm::vec3(13.0f, 0.5f, 17.0f);
 	XrotationDegrees = 0.0f;
@@ -846,6 +903,66 @@ void SceneManager::RenderBrownVowBook()
 	positionXYZ = glm::vec3(15.0f, 0.25f, 1.0f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("gray_felt");
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Bottom Vow Cover ---
+	scaleXYZ = glm::vec3(10.0f, 0.2f, 14.0f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 0.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(15.0f, 0.6f, 1.0f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("brown_leather");
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Top Vow Cover ---
+	scaleXYZ = glm::vec3(10.0f, 0.2f, 14.0f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 0.0f;
+	ZrotationDegrees = 5.0f;
+	positionXYZ = glm::vec3(15.0f, 1.0f, 1.0f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("brown_leather");
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Paper Inside Vow ---
+	scaleXYZ = glm::vec3(8.0, 0.05f, 14.0f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 0.0f;
+	ZrotationDegrees = 4.0f;
+	positionXYZ = glm::vec3(15.75f, 0.8f, 1.0f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderColor(1, 1, 1, 1);
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Paper Inside Vow ---
+	scaleXYZ = glm::vec3(8.0, 0.05f, 14.0f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 0.0f;
+	ZrotationDegrees = 3.0f;
+	positionXYZ = glm::vec3(15.75f, .8f, 1.0f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderColor(1, 1, 1, 1);
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Paper Inside Vow ---
+	scaleXYZ = glm::vec3(8.0, 0.05f, 14.0f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 0.0f;
+	ZrotationDegrees = 2.0f;
+	positionXYZ = glm::vec3(15.75f, .8f, 1.0f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderColor(1, 1, 1, 1);
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Paper Inside Vow ---
+	scaleXYZ = glm::vec3(8.0, 0.05f, 14.0f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 0.0f;
+	ZrotationDegrees = 1.0f;
+	positionXYZ = glm::vec3(15.75f, .8f, 1.0f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderColor(1, 1, 1, 1);
 	m_basicMeshes->DrawBoxMesh();
 
 }
