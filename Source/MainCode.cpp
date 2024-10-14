@@ -42,6 +42,8 @@ namespace
 	ViewManager* g_ViewManager = nullptr;
 }
 
+int main(int argc, char* argv[]);
+
 // Function declarations - all functions that are called manually
 // need to be pre-declared at the beginning of the source code.
 bool InitializeGLFW();
@@ -70,6 +72,7 @@ int main(int argc, char* argv[])
 
 	// try to create the main display window
 	g_Window = g_ViewManager->CreateDisplayWindow(WINDOW_TITLE);
+
 	// print the version to the console
 	std::cout << std::endl << "Version: " << SW_VERSION << std::endl;
 

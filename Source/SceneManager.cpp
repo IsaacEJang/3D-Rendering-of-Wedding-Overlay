@@ -370,6 +370,18 @@ void SceneManager::LoadSceneTextures()
 	bReturn = CreateGLTexture(
 		"textures/gray_felt.jpg",
 		"gray_felt");
+	
+	bReturn = CreateGLTexture(
+		"textures/black_felt.jpg",
+		"black_felt");
+
+	bReturn = CreateGLTexture(
+		"textures/green_felt.jpg",
+		"green_felt");
+
+	bReturn = CreateGLTexture(
+		"textures/peach_felt.jpg",
+		"peach_felt");
 
 	bReturn = CreateGLTexture(
 		"textures/white_leather.jpg",
@@ -378,14 +390,12 @@ void SceneManager::LoadSceneTextures()
 	bReturn = CreateGLTexture(
 		"textures/brown_leather.jpg",
 		"brown_leather");
-
+	
+	
+	
 	bReturn = CreateGLTexture(
-		"textures/black_felt.jpg",
-		"black_felt");
-
-	bReturn = CreateGLTexture(
-		"textures/green_felt.jpg",
-		"green_felt");
+		"textures/chain.jpg",
+		"gold_chain");
 	// after the texture image data is loaded into memory, the 
 	// loaded textures need to be bound to texture slots - there
 	// are a total of 16 available slots for scene textures
@@ -422,6 +432,104 @@ void SceneManager::SetShaderMaterial(
 /*** Please refer to the code in the OpenGL sample project  ***/
 /*** for assistance.                                        ***/
 /**************************************************************/
+/***********************************************************
+ *  DefineObjectMaterials()
+ *
+ *  This method is used for configuring the various material
+ *  settings for all of the objects within the 3D scene.
+ ***********************************************************/
+void SceneManager::DefineObjectMaterials()
+{
+	OBJECT_MATERIAL goldMaterial;
+	goldMaterial.diffuseColor = glm::vec3(0.4f, 0.4f, 0.4f);
+	goldMaterial.specularColor = glm::vec3(0.7f, 0.7f, 0.6f);
+	goldMaterial.shininess = 85.0;
+	goldMaterial.tag = "metal";
+
+	m_objectMaterials.push_back(goldMaterial);
+
+	OBJECT_MATERIAL glassMaterial;
+	glassMaterial.diffuseColor = glm::vec3(0.5f, 0.5f, 0.5f);
+	glassMaterial.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+	glassMaterial.shininess = 95.0;
+	glassMaterial.tag = "glass";
+
+	m_objectMaterials.push_back(glassMaterial);
+
+	OBJECT_MATERIAL marbleMaterial;
+	marbleMaterial.diffuseColor = glm::vec3(0.4f, 0.4f, 0.4f);
+	marbleMaterial.specularColor = glm::vec3(0.2f, 0.2f, 0.2f);
+	marbleMaterial.shininess = 30.0;
+	marbleMaterial.tag = "marble";
+
+	m_objectMaterials.push_back(marbleMaterial);
+
+	OBJECT_MATERIAL feltMaterial;
+	feltMaterial.diffuseColor = glm::vec3(0.1f, 0.1f, 0.1f);
+	feltMaterial.specularColor = glm::vec3(0.0f, 0.0f, 0.f);
+	feltMaterial.shininess = 1.0;
+	feltMaterial.tag = "felt";
+
+	m_objectMaterials.push_back(feltMaterial);
+
+	OBJECT_MATERIAL leatherMaterial;
+	leatherMaterial.diffuseColor = glm::vec3(0.4f, 0.4f, 0.4f);
+	leatherMaterial.specularColor = glm::vec3(0.2f, 0.2f, 0.2f);
+	leatherMaterial.shininess = 30.0;
+	leatherMaterial.tag = "leather";
+
+	m_objectMaterials.push_back(leatherMaterial);
+
+	
+}
+
+/***********************************************************
+ *  SetupSceneLights()
+ *
+ *  This method is called to add and configure the light
+ *  sources for the 3D scene.  There are up to 4 light sources.
+ ***********************************************************/
+void SceneManager::SetupSceneLights()
+{
+	// this line of code is NEEDED for telling the shaders to render 
+	// the 3D scene with custom lighting, if no light sources have
+	// been added then the display window will be black - to use the 
+	// default OpenGL lighting then comment out the following line
+	m_pShaderManager->setBoolValue(g_UseLightingName, true);
+
+	/*** STUDENTS - add the code BELOW for setting up light sources ***/
+	/*** Up to four light sources can be defined. Refer to the code ***/
+	/*** in the OpenGL Sample for help                              ***/
+
+	// Directional Light - simulates sunlight coming from the right side
+	//m_pShaderManager->setVec3Value("directionalLight.direction", 0.0f, -1.0f, 0.0f); 
+	//m_pShaderManager->setVec3Value("directionalLight.ambient", 0.2f, 0.2f, 0.2f);  // Adjusted ambient for a base light
+	//m_pShaderManager->setVec3Value("directionalLight.diffuse", .8f, .8f, .8f);  // Stronger diffuse light for brighter highlights
+	//m_pShaderManager->setVec3Value("directionalLight.specular", 1.0f, 1.0f, 1.0f); // Strong specular for reflections
+	//m_pShaderManager->setBoolValue("directionalLight.bActive", true);
+
+	// Point Light - simulates a nearby light source, like a window or a lamp
+	m_pShaderManager->setVec3Value("pointLights.position", 0.0f, 20.0f, 0.0f); // Positioned slightly above and to the side
+	m_pShaderManager->setVec3Value("pointLights[0].ambient", .5f, 0.5f, 0.5f);  // Adjusted ambient for more shadow contrast
+	m_pShaderManager->setVec3Value("pointLights[0].diffuse", .8f, .8f, .8f);  // Stronger diffuse for more intense lighting
+	m_pShaderManager->setVec3Value("pointLights[0].specular", 1.0f, 0.95f, 0.9);  // Strong specular highlights for shinier surfaces
+	m_pShaderManager->setBoolValue("pointLights[0].bActive", true);
+
+	// Set the position of the spotlight to emulate the sun's position
+	m_pShaderManager->setVec3Value("spotLight.position", -18.0f, 10.0f, 55.0f); // Place the sun high and behind the objects
+	m_pShaderManager->setVec3Value("spotLight.direction", 1.0f, -0.5f, -1.0f); // Adjust this to match the sunlight direction from the image
+	m_pShaderManager->setVec3Value("spotLight.ambient", 6.0f, 6.0f, 6.0f); // Increase ambient for more overall light
+	m_pShaderManager->setVec3Value("spotLight.diffuse", 15.0f, 15.0f, 15.0f); // Increase diffuse light for more brightness
+	m_pShaderManager->setVec3Value("spotLight.specular", 10.0f, 10.0f, 10.0f); // Brighten specular highlights
+	m_pShaderManager->setFloatValue("spotLight.constant", 1.0f);   // Minimal distance attenuation
+	m_pShaderManager->setFloatValue("spotLight.linear", 0.01f);    // Further reduced attenuation over distance
+	m_pShaderManager->setFloatValue("spotLight.quadratic", 0.005f); // Further reduced quadratic term for greater reach
+	m_pShaderManager->setFloatValue("spotLight.cutOff", glm::cos(glm::radians(110.0f))); // Wide inner angle for full scene coverage
+	m_pShaderManager->setFloatValue("spotLight.outerCutOff", glm::cos(glm::radians(130.0f))); // Even wider outer angle for soft edges
+	m_pShaderManager->setBoolValue("spotLight.bActive", true);
+
+
+}
 
 /***********************************************************
  *  PrepareScene()
@@ -434,6 +542,10 @@ void SceneManager::PrepareScene()
 {
 	// load the textures for the 3D scene
 	LoadSceneTextures();
+	// define the materials for objects in the scene
+	DefineObjectMaterials();
+	// add and define the light sources for the scene
+	SetupSceneLights();
 
 	// only one instance of a particular mesh needs to be
 	// loaded in memory no matter how many times it is drawn
@@ -448,6 +560,7 @@ void SceneManager::PrepareScene()
 	m_basicMeshes->LoadSphereMesh();
 	m_basicMeshes->LoadTaperedCylinderMesh();
 	m_basicMeshes->LoadTorusMesh();
+	m_basicMeshes->LoadHexagonMesh();
 
 }
 
@@ -499,7 +612,7 @@ void SceneManager::RenderTable()
 	ZrotationDegrees = 0.0f;
 
 	// set the XYZ position for the mesh
-	positionXYZ = glm::vec3(0.0f, 0.0f, 0.0f);
+	positionXYZ = glm::vec3(0.0f, 0.0f, -6.50f);
 
 	// set the transformations into memory to be used on the drawn meshes
 	SetTransformations(
@@ -511,6 +624,7 @@ void SceneManager::RenderTable()
 
 	//SetShaderColor(0.4f, 0.7f, 1.0f, 1.0f); // Light blue color
 	SetShaderTexture("marble");
+	SetShaderMaterial("marble");
 
 	// draw the mesh with transformation values
 	m_basicMeshes->DrawPlaneMesh();
@@ -542,6 +656,8 @@ void SceneManager::RenderCologneBottle()
 	positionXYZ = glm::vec3(-15.0f, 0.75f, -15.0f);  // Base position remains the same
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("blue_glass");
+	SetShaderMaterial("glass");
+
 	m_basicMeshes->DrawBoxMesh();
 
 	// --- Gold Sphere (Center of the Blue Box) ---
@@ -552,6 +668,7 @@ void SceneManager::RenderCologneBottle()
 	positionXYZ = glm::vec3(-15.0f, 1.875f, -15.0f);  // Adjusted position (0.75 * 1.5 = 1.125; 0.75 + 1.125 = 1.875)
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("versace");
+	SetShaderMaterial("metal");
 	m_basicMeshes->DrawSphereMesh();
 #pragma endregion
 
@@ -564,6 +681,8 @@ void SceneManager::RenderCologneBottle()
 	positionXYZ = glm::vec3(-15.0f, 0.75f, -19.95f);  // Adjusted position (-3.3 * 1.5 = -4.95; -15.0 + (-4.95) = -19.95)
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("gold");
+	SetShaderMaterial("metal");
+
 	m_basicMeshes->DrawCylinderMesh();
 
 	// --- Larger Cylinder (Top of the Cap) ---
@@ -574,6 +693,7 @@ void SceneManager::RenderCologneBottle()
 	positionXYZ = glm::vec3(-15.0f, 0.75f, -19.95f);  // Same adjusted position as the smaller cylinder
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("gold");
+	SetShaderMaterial("metal");
 	m_basicMeshes->DrawCylinderMesh(false, true, true);
 	SetShaderTexture("versace");
 	m_basicMeshes->DrawCylinderMesh(true, false, false);  // Using different texture for the top of the cylinder
@@ -597,55 +717,47 @@ void SceneManager::RenderPerfumeBottle()
 	float ZrotationDegrees = 0.0f;
 	glm::vec3 positionXYZ;
 
-#pragma region PerfumeBody
 	// --- Gold Box for the Perfume Body ---
-	scaleXYZ = glm::vec3(3.5f, 7.0f, 3.5f);  // Scaled up by 2
-	XrotationDegrees = 90.0f;  // Rotate the body 90 degrees around the X-axis
+	scaleXYZ = glm::vec3(3.5f, 7.0f, 3.5f);  
+	XrotationDegrees = 90.0f;  
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 0.0f;
-	positionXYZ = glm::vec3(-21.0f, 0.875f, 2.0f);  // Base position remains the same
+	positionXYZ = glm::vec3(-21.0f, 0.875f, 2.0f);  
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("perfume");
+	SetShaderMaterial("glass");
 	m_basicMeshes->DrawBoxMesh();
-#pragma endregion
 
-#pragma region RedLabel
 	// --- Red Label ---
-	scaleXYZ = glm::vec3(1.3f, 2.0f, 2.5f);  // Scaled up by 2
+	scaleXYZ = glm::vec3(1.3f, 2.0f, 2.5f);  
 	XrotationDegrees = 0.0f;
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 0.0f;
-	// Calculate the new Y position to align with the scaled body
-	positionXYZ = glm::vec3(-21.0f, 2.725f, 2.0f);  // Adjusted Y position
+	positionXYZ = glm::vec3(-21.0f, 2.725f, 2.0f);  
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderColor(1.0f, 0.0f, 0.0f, 1.0f);  // Red color
 	m_basicMeshes->DrawPlaneMesh();
-#pragma endregion
 
-#pragma region PerfumeCapBase
 	// --- Smaller Cylinder (Base of the Cap) ---
-	scaleXYZ = glm::vec3(1.3f, 1.5f, 1.3f);  // Scaled up by 2
-	XrotationDegrees = 90.0f;  // Rotate the cylinder to match the body's orientation
+	scaleXYZ = glm::vec3(1.3f, 1.5f, 1.3f);  
+	XrotationDegrees = 90.0f;
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 0.0f;
-	// Calculate the new Z position to align with the scaled body
-	positionXYZ = glm::vec3(-21.0f, 0.875f, -3.0f);  // Adjusted Z position
+	positionXYZ = glm::vec3(-21.0f, 0.875f, -3.0f);  
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("gold");
+	SetShaderMaterial("metal");
 	m_basicMeshes->DrawCylinderMesh();
-#pragma endregion
 
-#pragma region PerfumeCap
 	// --- Perfume Cap ---
-	scaleXYZ = glm::vec3(3.0f, 1.5f, 3.0f);  // Scaled up by 2
-	XrotationDegrees = -90.0f;  // Rotate the cap to match the orientation
+	scaleXYZ = glm::vec3(3.0f, 1.5f, 3.0f);  
+	XrotationDegrees = -90.0f;  
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 180.0f;
-	// Calculate the new Z position to align with the cap base
-	positionXYZ = glm::vec3(-21.0f, 0.875f, -3.5f);  // Adjusted Z position
+	positionXYZ = glm::vec3(-21.0f, 0.875f, -3.5f);  
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("gold");
-	// Draw the sides of the cap
+	SetShaderMaterial("metal");
 	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::bottom);
 	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::right);
 	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::left);
@@ -653,9 +765,9 @@ void SceneManager::RenderPerfumeBottle()
 	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::front);
 
 	// Draw the top with a different texture
+	SetShaderMaterial("metal");
 	SetShaderTexture("versace");
 	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::top);  // Different texture for top of cap
-#pragma endregion
 
 
 }
@@ -725,7 +837,7 @@ void SceneManager::RenderNecklaceBox()
 	float ZrotationDegrees = 0.0f;
 	glm::vec3 positionXYZ;
 
-	// --- Ring Box Bottom---
+	// --- Necklace Box Bottom---
 	scaleXYZ = glm::vec3(6.0f, 2.0f, 6.0f);  
 	XrotationDegrees = 0.0f;  
 	YrotationDegrees = 15.0f;
@@ -733,6 +845,8 @@ void SceneManager::RenderNecklaceBox()
 	positionXYZ = glm::vec3(-5.0f, 1.0f, -15.0f);  
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("green_felt");
+	SetShaderMaterial("felt");
+
 	// Draw the sides of the cap
 	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::bottom);
 	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::right);
@@ -741,31 +855,162 @@ void SceneManager::RenderNecklaceBox()
 	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::front);
 
 	// Draw the top with a different texture
+	SetShaderMaterial("felt");
 	SetShaderTexture("black_felt");
 	m_basicMeshes->DrawBoxMeshSide(ShapeMeshes::BoxSide::top);
 
 	// --- Necklace Platform ---
-	scaleXYZ = glm::vec3(5.0f, 0.2f, 5.0f);
+	scaleXYZ = glm::vec3(4.3f, 0.2f, 4.3f);
 	XrotationDegrees = 0.0f;
 	YrotationDegrees = 15.0f;
 	ZrotationDegrees = 0.0f;
 	positionXYZ = glm::vec3(-5.0f, 2.1f, -15.0f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("black_felt");
+	SetShaderMaterial("felt");
 	m_basicMeshes->DrawBoxMesh();
 
+	// --- Necklace left ---
+	scaleXYZ = glm::vec3(.50f, 0.15f, .50f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 0.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(-5.30f, 2.3f, -15.0f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("gold");
+	SetShaderMaterial("metal");
+	m_basicMeshes->DrawCylinderMesh();
 
-	// --- Ring Box Top ---
+	// --- Necklace Right ---
+	scaleXYZ = glm::vec3(.50f, 0.15f, .50f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 0.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(-4.5f, 2.3f, -15.2f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("gold");
+	SetShaderMaterial("metal");
+
+	m_basicMeshes->DrawCylinderMesh();
+
+	// --- Necklace Top ---
+	scaleXYZ = glm::vec3(.50f, 0.15f, .50f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 0.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(-5.0f, 2.3f, -15.47f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("gold");
+	SetShaderMaterial("metal");
+	m_basicMeshes->DrawCylinderMesh();
+
+	// --- Necklace Bottom ---
+	scaleXYZ = glm::vec3(.50f, 0.15f, .50f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 0.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(-4.8f, 2.3f, -14.75f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("gold");
+	SetShaderMaterial("metal");
+	m_basicMeshes->DrawCylinderMesh();
+
+	// --- Necklace Center ---
+	scaleXYZ = glm::vec3(.15f, 0.15f, .15f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 0.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(-4.9f, 2.45f, -15.2f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("gold");
+	SetShaderMaterial("metal");
+	m_basicMeshes->DrawSphereMesh();
+
+	// --- Necklace Chain Left ---
+	scaleXYZ = glm::vec3(1.75f, 0.2f, .2f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = -25.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(-6.0f, 2.3f, -16.0f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetTextureUVScale(1.0f, 1.0f);
+	SetShaderTexture("gold_chain");
+	SetShaderMaterial("metal");
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Necklace Chain Left ---
+	scaleXYZ = glm::vec3(3.95f, 0.2f, .2f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 105.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(-6.3f, 2.25f, -14.5f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetTextureUVScale(2.25f, 1.0f);
+	SetShaderTexture("gold_chain");
+	SetShaderMaterial("metal");
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Necklace Chain Left Down ---
+	scaleXYZ = glm::vec3(0.5f, 0.2f, .2f);
+	XrotationDegrees = 105.0f;
+	YrotationDegrees = 0.0f;
+	ZrotationDegrees = 90.0f;
+	positionXYZ = glm::vec3(-5.8f, 2.09f, -12.6f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetTextureUVScale(0.5f, .5f);
+	SetShaderTexture("gold_chain");
+	SetShaderMaterial("metal");
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Necklace Chain Right ---
+	scaleXYZ = glm::vec3(1.75f, 0.2f, .2f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 55.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(-4.5f, 2.3f, -16.3f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetTextureUVScale(1.0f, 1.0f);
+	SetShaderTexture("gold_chain");
+	SetShaderMaterial("metal");
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Necklace Chain Right ---
+	scaleXYZ = glm::vec3(3.95f, 0.2f, .2f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 107.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(-3.4f, 2.25f, -15.25f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetTextureUVScale(2.25f, 1.0f);
+	SetShaderTexture("gold_chain");
+	SetShaderMaterial("metal");
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Necklace Chain Right Down ---
+	scaleXYZ = glm::vec3(0.5f, 0.2f, .2f);
+	XrotationDegrees = 105.0f;
+	YrotationDegrees = 0.0f;
+	ZrotationDegrees = 90.0f;
+	positionXYZ = glm::vec3(-2.8f, 2.09f, -13.35f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetTextureUVScale(0.5f, .5f);
+	SetShaderTexture("gold_chain");
+	SetShaderMaterial("metal");
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Necklace Box Top ---
 	scaleXYZ = glm::vec3(6.0f, 2.0f, 6.0f);
 	XrotationDegrees = 70.0f;
 	YrotationDegrees = 15.0f;
 	ZrotationDegrees = 0.0f;
 	positionXYZ = glm::vec3(-6.3f, 4.5f, -19.8f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetTextureUVScale(1.0f, 1.0f);
 	SetShaderTexture("green_felt");
+	SetShaderMaterial("felt");
 	m_basicMeshes->DrawBoxMesh();
 
-	// --- Necklace Platform ---
+	// --- Black felt Top Of Necklace Box ---
 	scaleXYZ = glm::vec3(5.0f, 0.2f, 5.0f);
 	XrotationDegrees = 70.0f;
 	YrotationDegrees = 15.0f;
@@ -773,6 +1018,7 @@ void SceneManager::RenderNecklaceBox()
 	positionXYZ = glm::vec3(-6.0f, 4.75f, -18.75f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("black_felt");
+	SetShaderMaterial("felt");
 	m_basicMeshes->DrawBoxMesh();
 }
 
@@ -790,6 +1036,53 @@ void SceneManager::RenderRingBox()
 	float YrotationDegrees = 0.0f;
 	float ZrotationDegrees = 0.0f;
 	glm::vec3 positionXYZ;
+
+
+	// --- Ring Box --- // 
+	scaleXYZ = glm::vec3(7.0f, 7.f, 2.f);
+	XrotationDegrees = 90.0f;
+	YrotationDegrees = -20.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(10.0f, 1.f, -13.0f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("peach_felt");
+	SetShaderMaterial("glass");
+	m_basicMeshes->DrawHexagonMesh();
+
+	// --- Ring Box Lip --- // 
+	scaleXYZ = glm::vec3(5.75f, 5.75f, .4f);
+	XrotationDegrees = 90.0f;
+	YrotationDegrees = -20.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(10.0f, 2.2f, -13.0f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("peach_felt");
+	SetShaderMaterial("felt");
+	m_basicMeshes->DrawHexagonMesh();
+
+	// --- Ring Box --- // 
+	scaleXYZ = glm::vec3(7.0f, 7.f, 2.f);
+	XrotationDegrees = 90.0f;
+	YrotationDegrees = -20.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(16.0f, 1.f, -16.50f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("peach_felt");
+	SetShaderMaterial("felt");
+	m_basicMeshes->DrawHexagonMesh();
+
+	// --- Ring Box Lip --- // 
+	scaleXYZ = glm::vec3(5.75f, 5.75f, .4f);
+	XrotationDegrees = 90.0f;
+	YrotationDegrees = -20.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(16.0f, 2.2f, -16.50f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("peach_felt");
+	SetShaderMaterial("glass");
+	m_basicMeshes->DrawHexagonMesh();
+
+
 }
 
 
@@ -816,6 +1109,7 @@ void SceneManager::RenderWhiteVowBook()
 	positionXYZ = glm::vec3(-3.0f, 0.25f, 1.0f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("gray_felt");
+	SetShaderMaterial("felt");
 	m_basicMeshes->DrawBoxMesh();
 
 	// --- Bottom Vow Cover ---
@@ -826,6 +1120,7 @@ void SceneManager::RenderWhiteVowBook()
 	positionXYZ = glm::vec3(-3.0f, .6f, 1.0f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("white_leather");
+	SetShaderMaterial("leather");
 	m_basicMeshes->DrawBoxMesh();
 
 	// --- Top Vow Cover ---
@@ -836,6 +1131,7 @@ void SceneManager::RenderWhiteVowBook()
 	positionXYZ = glm::vec3(-3.0f, 1.0f, 1.0f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("white_leather");
+	SetShaderMaterial("leather");
 	m_basicMeshes->DrawBoxMesh();
 
 	// --- Paper Inside Vow ---
@@ -886,6 +1182,12 @@ void SceneManager::RenderWhiteVowBook()
  *  This method is called to render the shapes for the scene
  *  backdrop object.
  ***********************************************************/
+ /***********************************************************
+  *  RenderBrownVowBook()
+  *
+  *  This method is called to render the shapes for the scene
+  *  backdrop object.
+  ***********************************************************/
 void SceneManager::RenderBrownVowBook()
 {
 	// Declare the variables for the transformations
@@ -900,9 +1202,10 @@ void SceneManager::RenderBrownVowBook()
 	XrotationDegrees = 0.0f;
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 0.0f;
-	positionXYZ = glm::vec3(15.0f, 0.25f, 1.0f);
+	positionXYZ = glm::vec3(12.0f, 0.25f, 1.0f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("gray_felt");
+	SetShaderMaterial("felt");
 	m_basicMeshes->DrawBoxMesh();
 
 	// --- Bottom Vow Cover ---
@@ -910,9 +1213,10 @@ void SceneManager::RenderBrownVowBook()
 	XrotationDegrees = 0.0f;
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 0.0f;
-	positionXYZ = glm::vec3(15.0f, 0.6f, 1.0f);
+	positionXYZ = glm::vec3(12.0f, 0.6f, 1.0f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("brown_leather");
+	SetShaderMaterial("leather");
 	m_basicMeshes->DrawBoxMesh();
 
 	// --- Top Vow Cover ---
@@ -920,9 +1224,10 @@ void SceneManager::RenderBrownVowBook()
 	XrotationDegrees = 0.0f;
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 5.0f;
-	positionXYZ = glm::vec3(15.0f, 1.0f, 1.0f);
+	positionXYZ = glm::vec3(12.0f, 1.0f, 1.0f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("brown_leather");
+	SetShaderMaterial("leather");
 	m_basicMeshes->DrawBoxMesh();
 
 	// --- Paper Inside Vow ---
@@ -930,7 +1235,7 @@ void SceneManager::RenderBrownVowBook()
 	XrotationDegrees = 0.0f;
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 4.0f;
-	positionXYZ = glm::vec3(15.75f, 0.8f, 1.0f);
+	positionXYZ = glm::vec3(12.75f, 0.8f, 1.0f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderColor(1, 1, 1, 1);
 	m_basicMeshes->DrawBoxMesh();
@@ -940,7 +1245,7 @@ void SceneManager::RenderBrownVowBook()
 	XrotationDegrees = 0.0f;
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 3.0f;
-	positionXYZ = glm::vec3(15.75f, .8f, 1.0f);
+	positionXYZ = glm::vec3(12.75f, .8f, 1.0f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderColor(1, 1, 1, 1);
 	m_basicMeshes->DrawBoxMesh();
@@ -950,7 +1255,7 @@ void SceneManager::RenderBrownVowBook()
 	XrotationDegrees = 0.0f;
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 2.0f;
-	positionXYZ = glm::vec3(15.75f, .8f, 1.0f);
+	positionXYZ = glm::vec3(12.75f, .8f, 1.0f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderColor(1, 1, 1, 1);
 	m_basicMeshes->DrawBoxMesh();
@@ -960,9 +1265,8 @@ void SceneManager::RenderBrownVowBook()
 	XrotationDegrees = 0.0f;
 	YrotationDegrees = 0.0f;
 	ZrotationDegrees = 1.0f;
-	positionXYZ = glm::vec3(15.75f, .8f, 1.0f);
+	positionXYZ = glm::vec3(12.75f, .8f, 1.0f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderColor(1, 1, 1, 1);
 	m_basicMeshes->DrawBoxMesh();
-
 }
