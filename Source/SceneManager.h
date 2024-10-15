@@ -102,8 +102,6 @@ public:
 	// render the objects in the 3D scene
 	void RenderScene();
 
-	
-
 	// load all of the needed textures before rendering
 	void LoadSceneTextures();
 	// define all the object materials before rendering
@@ -117,6 +115,7 @@ public:
 	void RenderItinerary();
 	void RenderNecklaceBox();
 	void RenderRingBox();
+	void RenderEarrings();
 	void RenderWhiteVowBook();
 	void RenderBrownVowBook();
 

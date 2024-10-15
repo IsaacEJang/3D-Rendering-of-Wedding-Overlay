@@ -510,9 +510,9 @@ void SceneManager::SetupSceneLights()
 
 	// Point Light - simulates a nearby light source, like a window or a lamp
 	m_pShaderManager->setVec3Value("pointLights.position", 0.0f, 20.0f, 0.0f); // Positioned slightly above and to the side
-	m_pShaderManager->setVec3Value("pointLights[0].ambient", .5f, 0.5f, 0.5f);  // Adjusted ambient for more shadow contrast
-	m_pShaderManager->setVec3Value("pointLights[0].diffuse", .8f, .8f, .8f);  // Stronger diffuse for more intense lighting
-	m_pShaderManager->setVec3Value("pointLights[0].specular", 1.0f, 0.95f, 0.9);  // Strong specular highlights for shinier surfaces
+	m_pShaderManager->setVec3Value("pointLights[0].ambient", .55f, 0.5f, 0.5f);  // Adjusted ambient for more shadow contrast
+	m_pShaderManager->setVec3Value("pointLights[0].diffuse", .75f, .7f, .7f);  // Stronger diffuse for more intense lighting
+	m_pShaderManager->setVec3Value("pointLights[0].specular", 1.0f, 0.9f, 0.9);  // Strong specular highlights for shinier surfaces
 	m_pShaderManager->setBoolValue("pointLights[0].bActive", true);
 
 	// Set the position of the spotlight to emulate the sun's position
@@ -578,6 +578,7 @@ void SceneManager::RenderScene()
 	RenderItinerary();
 	RenderNecklaceBox();
 	RenderRingBox();
+	RenderEarrings();
 	RenderWhiteVowBook();
 	RenderBrownVowBook();
 }
@@ -890,7 +891,6 @@ void SceneManager::RenderNecklaceBox()
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("gold");
 	SetShaderMaterial("metal");
-
 	m_basicMeshes->DrawCylinderMesh();
 
 	// --- Necklace Top ---
@@ -1037,8 +1037,7 @@ void SceneManager::RenderRingBox()
 	float ZrotationDegrees = 0.0f;
 	glm::vec3 positionXYZ;
 
-
-	// --- Ring Box --- // 
+	// --- Ring Box 1 --- // 
 	scaleXYZ = glm::vec3(7.0f, 7.f, 2.f);
 	XrotationDegrees = 90.0f;
 	YrotationDegrees = -20.0f;
@@ -1046,10 +1045,10 @@ void SceneManager::RenderRingBox()
 	positionXYZ = glm::vec3(10.0f, 1.f, -13.0f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("peach_felt");
-	SetShaderMaterial("glass");
+	SetShaderMaterial("felt");
 	m_basicMeshes->DrawHexagonMesh();
 
-	// --- Ring Box Lip --- // 
+	// --- Ring Box Lip 1 --- // 
 	scaleXYZ = glm::vec3(5.75f, 5.75f, .4f);
 	XrotationDegrees = 90.0f;
 	YrotationDegrees = -20.0f;
@@ -1060,7 +1059,7 @@ void SceneManager::RenderRingBox()
 	SetShaderMaterial("felt");
 	m_basicMeshes->DrawHexagonMesh();
 
-	// --- Ring Box --- // 
+	// --- Ring Box Top 2 --- // 
 	scaleXYZ = glm::vec3(7.0f, 7.f, 2.f);
 	XrotationDegrees = 90.0f;
 	YrotationDegrees = -20.0f;
@@ -1071,7 +1070,7 @@ void SceneManager::RenderRingBox()
 	SetShaderMaterial("felt");
 	m_basicMeshes->DrawHexagonMesh();
 
-	// --- Ring Box Lip --- // 
+	// --- Ring Box Top Lip 2 --- // 
 	scaleXYZ = glm::vec3(5.75f, 5.75f, .4f);
 	XrotationDegrees = 90.0f;
 	YrotationDegrees = -20.0f;
@@ -1079,12 +1078,166 @@ void SceneManager::RenderRingBox()
 	positionXYZ = glm::vec3(16.0f, 2.2f, -16.50f);
 	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
 	SetShaderTexture("peach_felt");
-	SetShaderMaterial("glass");
+	SetShaderMaterial("felt");
 	m_basicMeshes->DrawHexagonMesh();
 
+	// --- Groom Wedding Ban --- // 
+	scaleXYZ = glm::vec3(1.35f, 1.f, 1.35f);
+	XrotationDegrees = 90.0f;
+	YrotationDegrees = -20.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(10.60f, 2.2f, -14.40f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	//SetShaderColor(0.4f, 0.7f, 1.0f, 1.0f); // Light blue color
+	SetShaderTexture("gold");
+	SetShaderMaterial("metal");
+	m_basicMeshes->DrawCylinderMesh();
 
+	// --- Groom Wedding Ban --- // 
+	scaleXYZ = glm::vec3(.4f, .75f, .1f);
+	XrotationDegrees = 90.0f;
+	YrotationDegrees = -20.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(10.450f, 3.55f, -13.950f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	//SetShaderColor(0.4f, 0.7f, 1.0f, 1.0f); // Light blue color
+	SetShaderTexture("blue_glass");
+	SetShaderMaterial("glass");
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- Bride Engagement Ring --- // 
+	scaleXYZ = glm::vec3(.8f, 1.f, .8f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = -20.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(10.f, 2.2f, -12.5f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	//SetShaderColor(0.4f, 0.7f, 1.0f, 1.0f); // Light blue color
+	SetShaderTexture("gold");
+	SetShaderMaterial("metal");
+	m_basicMeshes->DrawTorusMesh();
+
+	// --- Bride Engagement Ring Hidden Halo --- // 
+	scaleXYZ = glm::vec3(.3f, .5f, .2f);
+	XrotationDegrees = 90.0f;
+	YrotationDegrees = -20.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(10.f, 3.65f, -12.5f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	//SetShaderColor(0.4f, 0.7f, 1.0f, 1.0f); // Light blue color
+	SetShaderTexture("gold");
+	SetShaderMaterial("metal");
+	m_basicMeshes->DrawTorusMesh();
+
+	// --- Bride Engagement Ring Top Of Diamond --- // 
+	scaleXYZ = glm::vec3(.3f, .2f, .5f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = -20.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(10.f, 3.65f, -12.5f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	//SetShaderColor(0.4f, 0.7f, 1.0f, 1.0f); // Light blue color
+	SetShaderTexture("marble");
+	SetShaderMaterial("metal");
+	m_basicMeshes->DrawHalfSphereMesh();
+
+	// --- Bride Engagement Ring Bottom Of Diamond --- // 
+	scaleXYZ = glm::vec3(.5f, .4f, .5f);
+	XrotationDegrees = 180.0f;
+	YrotationDegrees = -20.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(10.f, 3.45f, -12.5f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	//SetShaderColor(0.4f, 0.7f, 1.0f, 1.0f); // Light blue color
+	SetShaderTexture("marble");
+	SetShaderMaterial("metal");
+	m_basicMeshes->DrawPyramid4Mesh();
+
+	// --- Bride Wedding Ban --- // 
+	scaleXYZ = glm::vec3(.8f, 1.f, .8f);
+	XrotationDegrees = 15.0f;
+	YrotationDegrees = -25.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(9.6f, 2.1f, -12.5f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	//SetShaderColor(0.4f, 0.7f, 1.0f, 1.0f); // Light blue color
+	SetShaderTexture("gold");
+	SetShaderMaterial("metal");
+	m_basicMeshes->DrawTorusMesh();
+		
 }
 
+/***********************************************************
+ *  RenderEarrings()
+ *
+ *  This method is called to render the shapes for the scene
+ *  backdrop object.
+ ***********************************************************/
+void SceneManager::RenderEarrings()
+{
+	// Declare the variables for the transformations
+	glm::vec3 scaleXYZ;
+	float XrotationDegrees = 0.0f;
+	float YrotationDegrees = 0.0f;
+	float ZrotationDegrees = 0.0f;
+	glm::vec3 positionXYZ;
+
+	// --- Black Felt Sleeve ---
+	scaleXYZ = glm::vec3(4.50f, 0.5f, 6.50f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = -15.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(3.0f, 0.25f, -15.0f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("black_felt");
+	SetShaderMaterial("felt");
+	m_basicMeshes->DrawBoxMesh();
+
+	// --- 1st Earring Pearl ---
+	scaleXYZ = glm::vec3(.40f, .4f, .5f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = -15.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(2.50f, 0.75f, -14.0f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("marble");
+	SetShaderMaterial("marble");
+	m_basicMeshes->DrawSphereMesh();
+
+	// --- 2nd Earring Pearl ---
+	scaleXYZ = glm::vec3(.40f, .4f, .5f);
+	XrotationDegrees = 0.0f;
+	YrotationDegrees = 20.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(3.15f, 0.75f, -14.50f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("marble");
+	SetShaderMaterial("marble");
+	m_basicMeshes->DrawSphereMesh();
+
+	// --- 1st Earring Loop ---
+	scaleXYZ = glm::vec3(.40f, .6f, .2f);
+	XrotationDegrees = 90.0f;
+	YrotationDegrees = -25.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(2.8f, 0.65f, -15.10f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("gold");
+	SetShaderMaterial("metal");
+	m_basicMeshes->DrawTorusMesh();
+
+	// --- 2nd Earring Loop ---
+	scaleXYZ = glm::vec3(.40f, .6f, .2f);
+	XrotationDegrees = 90.0f;
+	YrotationDegrees = -45.0f;
+	ZrotationDegrees = 0.0f;
+	positionXYZ = glm::vec3(3.2f, 0.65f, -15.40f);
+	SetTransformations(scaleXYZ, XrotationDegrees, YrotationDegrees, ZrotationDegrees, positionXYZ);
+	SetShaderTexture("gold");
+	SetShaderMaterial("metal");
+	m_basicMeshes->DrawTorusMesh();
+
+}
 
 /***********************************************************
  *  RenderWhiteVowBook()
@@ -1182,12 +1335,6 @@ void SceneManager::RenderWhiteVowBook()
  *  This method is called to render the shapes for the scene
  *  backdrop object.
  ***********************************************************/
- /***********************************************************
-  *  RenderBrownVowBook()
-  *
-  *  This method is called to render the shapes for the scene
-  *  backdrop object.
-  ***********************************************************/
 void SceneManager::RenderBrownVowBook()
 {
 	// Declare the variables for the transformations
