@@ -45,7 +45,7 @@ The project uses a combination of **OpenGL** for rendering 3D models and **custo
   - **Texture Scaling**: Adjusting texture UV scales on small objects like the necklace was particularly challenging.
 
 ## Reflection:
-### How do I approach designing software?
+#### How do I approach designing software?
 I decided to replicate a significant moment from my wedding for my 3D scene project, which provided me with a clear direction and goal for my design. My ability to accurately depict real-world things in a digital setting has improved as a result of this project, particularly when working with intricate textures and shapes like the hexagon and gold necklace. I used an organized design method, segmenting the project into smaller, more manageable components and concentrating on resolving technical issues like lighting and texture mapping. In order to allow visitors to explore the scene from various angles, I also made sure that the user experience was easy to use by including basic navigation choices. I intend to continue using the strategies I employed, such as decomposing difficult issues and iteratively improving my design, in other projects. They enable me to maintain concentration and guarantee that the final work is both useful and significant.
 
 ## How do I approach developing programs?
