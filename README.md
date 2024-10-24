@@ -12,7 +12,7 @@ This project is a 3D rendering of a personal scene using OpenGL. The scene repli
 | **3D Rendering (Side View)** <br /> <br /> A side view of the 3D scene, showing the depth and dimensions of the objects from a different perspective.| ![Wedding Overlay 3D Rendering - side view](https://github.com/user-attachments/assets/98035f38-b160-4dcb-9a99-473567396b35)                        |
 
 
-Technologies used: 
+## Technologies used: 
 - **OpenGL** for 3D rendering
 - **C++** as the programming language
 - **Custom shaders** for lighting and material effects
